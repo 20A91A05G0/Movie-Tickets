@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie</title>
+    <style>
+      #ticket_Container {
+        margin: 100px;
+        border: 2px solid black;
+        height: 200px;
+        width: 600px;
+        text-align: center;
+        font-family: "Gill Sans";
+      }
+      #ticket_Container > h1 {
+        color: azure;
+        margin: 0;
+        background-color: blue;
+      }
+      #inner_container {
+        padding-left: 10px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <button onclick="buyTickets()">Buy Tickets</button>
+      <div id="tickets_container"></div>
+    </center>
+    <script>
+      let htmlCode = `<div id="ticket_Container">
+          <h1>Ticket Details</h1>
+          <div id="inner_container">
+            <p id="no"> Number of tickets: NO_OF_TICKETS </p>
+            <p id="tp"> Total price = TOTAL_PRICE </p>
+            <p id="dis"> Festive season discount is: DISCOUNT </p>
+            <p id="tpad"> Total price after the discount =  TOTAL_PRICE_AFTER_DISCOUNT</p>
+          </div>
+        </div>`;
+      var count = 0;
+      function buyTickets(params) {
+        let n = Number(prompt("Enter number of tickets: "));
+        if (n > 1 && n < 6) {
+          let discountPrice = 0;
+          let discount = "";
+          if (count < 5) {
+            switch (n) {
+              case 2:
+                discountPrice = 0;
+                discount = "0%";
+                break;
+              case 3:
+                discountPrice = 150 / 3 + 150 / 5 + 150 / 7;
+                discount = "3%, 5%, 7%";
+                break;
+              case 4:
+                discountPrice = 150 / 3 + 150 / 5 + 150 / 7 + 150 / 9;
+                discount = "3%, 5%, 7%, 9%";
+                break;
+              case 5:
+                discountPrice =
+                  150 / 3 + 150 / 5 + 150 / 7 + 150 / 9 + 150 / 11;
+                discount = "3%, 5%, 7%, 9%, 11%";
+                break;
+            }
+          }
+          discount = discount == "" ? "0" : discount;
+          let code = htmlCode
+            .replace("NO_OF_TICKETS", n)
+            .replace("TOTAL_PRICE", `${n * 150}`)
+            .replace("DISCOUNT", discount)
+            .replace(
+              "TOTAL_PRICE_AFTER_DISCOUNT",
+              `${n * 150 - Math.round(discountPrice)}`
+            );
+          document.getElementById("tickets_container").innerHTML += code;
+          count++;
+          console.log(count);
+          //   document.getElementById("no").innerText = "Number of tickets: " + n;
+          //   document.getElementById("tp").innerText = `Total price = ${n * 150}`;
+          //   document.getElementById(
+          //     "dis"
+          //   ).innerText = `Festive season discount is: ${discount}`;
+          //   document.getElementById(
+          //     "tpad"
+          //   ).innerText = `Total price after the discount = ${
+          //     n * 150 - Math.round(discountPrice)
+          //   }`;
+        } else {
+          alert("This number of seats are not allowed");
+        }
+      }
+    </script>
+  </body>
+</html>
